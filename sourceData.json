@@ -1,0 +1,36 @@
+{
+    "data": {
+        "id": "nbeBWdaGO1",
+        "completenessScore": 70,
+        "legalForm": "GmbH",
+        "lastUpdateDate": "2021-02-16T01:23:44Z",
+        "companyName": "m.Doc GmbH",
+        "street": "Ursulaplatz 1",
+        "streetName": "Ursulaplatz",
+        "streetNumber": "1",
+        "zip": "50668",
+        "location": "Köln",
+        "country": "Deutschland",
+        "url": "http://mdoc.one",
+        "email": "info@mdoc.one",
+        "phone": "+49 22166963700",
+        "fax": "+49 22166999443",
+        "registerStatus": "active",
+        "registerId": "HRB88659",
+        "registerLocation": "Köln",
+        "nameAlternatives": [
+            "m. Doc GmbH"
+        ],
+        "vatId": "DE308861740",
+        "EBID": null,
+        "industryCodes": [
+            "62019"
+        ],
+        "foundedYear": 2016,
+        "employeeSize": "11-100"
+    },
+    "metadata": {
+        "customId": "40016",
+        "userId": "andreas.stoll@explainr.de"
+    }
+}

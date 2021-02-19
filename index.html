@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JSON Parse</title>
+
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+	<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./js/jquery.min.js"></script>
+
+	<script type="text/javascript" src="./sourceData.json"></script>
+	<script type="text/javascript" src="./destData.json"></script>
+
+	<style>
+		table tr th {
+			text-align: center;
+		}
+
+		.form-check-input {
+			margin-left: 0;
+
+		}
+	</style>
+</head>
+<body>
+
+	<div class="container mt-5">
+		<div class="">
+			<table class="table table-bordered" id="table">
+    			<thead>
+    				<tr>
+    					<th class="w-auto">Fields</th>
+    					<th class="w-auto">Name</th>
+    					<th class="w-auto">Disable</th>
+    				</tr>
+    			</thead>
+    			<tbody>
+    				<script>
+    					
+    					$(document).ready(function() {
+
+    						var tableRow = '';
+    						var index = 0;
+    						
+    						$.getJSON('sourceData.json', function(sourceData) {
+    							
+    							for(let fields in sourceData.data) {
+    								
+    								$.getJSON('destData.json', function(destData) {
+    									tableRow = '<tr>';
+    									tableRow += '<td>'+fields+'</td>';
+    									tableRow += '<td><select class=\"form-control\"';
+
+	    								destData.data.forEach(item => {
+	    									tableRow += '<option>'+item.name+'</option>'
+	    									
+	    								})
+
+	    								tableRow += '</select></td>'
+    									tableRow += '<td><input type="checkbox" class="form-check-input" value=""></td>'
+    									tableRow += '</tr>';
+
+    									index += 1;
+
+    									$('#table').append(tableRow);
+
+    								})
+
+    							}
+    							
+    						});
+
+	    				})
+
+    				</script>
+    			</tbody>
+  			</table>
+		</div>
+	</div>
+
+</body>
+</html>
