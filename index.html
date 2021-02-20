@@ -68,9 +68,9 @@
                                 tableRow += '</tr>';
 
                                 answer[index] = {
-                                    fields: parentItem,
-                                    label: false,
-                                    isChecked: isChecked[index]
+                                    source: parentItem,
+                                    dest: false,
+                                    note: isChecked[index]
                                 }
 
 
@@ -84,36 +84,42 @@
                                 var fieldValue = $(data).val();
                                 var fieldId = $(data).attr("id")
                                 
-                                answer[fieldId]["label"] = fieldValue
+                                answer[fieldId]["dest"] = fieldValue
                             }
 
                             handleClick = (data) => {
                                 var checkboxId = data
                             
-                                if (answer[checkboxId]["isChecked"] === false) {
-                                    answer[checkboxId]["isChecked"] = true;
+                                if (answer[checkboxId]["note"] === false) {
+                                    answer[checkboxId]["note"] = true;
                                 } else {
-                                    answer[checkboxId]["isChecked"] = false;
+                                    answer[checkboxId]["note"] = false;
                                 }
                             }
 
 
                             showData = () => {
+
                                 var showing = ''
                                 showing += '<pre>'
+                                
                                 for(var i=0; i<answer.length; i++) {
                                     showing += '{'
-                                    showing += answer[i]["fields"]
                                     showing += '<br>'
-                                    showing += answer[i]["label"]
+                                    showing += '    source: '+answer[i]["source"]
                                     showing += '<br>'
-                                    showing += answer[i]["isChecked"]
+                                    showing += '    dest: '+answer[i]["dest"]
+                                    showing += '<br>'
+                                    showing += '    note: '+answer[i]["note"]
                                     showing += '<br>'
                                     showing += '}'
                                     showing += '<br>'
                                 }
+
                                 showing += '</pre>'
+                                
                                 document.getElementById('dataArray').innerHTML = showing
+                                console.log(answer)
                             }
 
 	    				})
