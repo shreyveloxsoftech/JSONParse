@@ -7,9 +7,6 @@
 	<script type="text/javascript" src="./js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./js/jquery.min.js"></script>
 
-	<script type="text/javascript" src="./sourceData.json"></script>
-	<script type="text/javascript" src="./destData.json"></script>
-
 	<style>
 		table tr th {
 			text-align: center;
@@ -36,46 +33,107 @@
     			<tbody>
     				<script>
     					
-    					$(document).ready(function() {
+    					$(document).ready(async function() {
 
     						var tableRow = '';
     						var index = 0;
+
+                            let answer = []
+                            let label = []
+                            let isChecked = []
     						
-    						$.getJSON('sourceData.json', function(sourceData) {
-    							
-    							for(let fields in sourceData.data) {
-    								
-    								$.getJSON('destData.json', function(destData) {
-    									tableRow = '<tr>';
-    									tableRow += '<td>'+fields+'</td>';
-    									tableRow += '<td><select class=\"form-control\"';
+                            $.ajaxSetup({
+                                async: false
+                            });
 
-	    								destData.data.forEach(item => {
-	    									tableRow += '<option>'+item.name+'</option>'
-	    									
-	    								})
+    						const sourceData = await $.getJSON('sourceData.json');
+                            const destData = await $.getJSON('destData.json');
+                            
+                            const keys = Object.keys(sourceData.data)
 
-	    								tableRow += '</select></td>'
-    									tableRow += '<td><input type="checkbox" class="form-check-input" value=""></td>'
-    									tableRow += '</tr>';
+                            keys.forEach(parentItem => {
 
-    									index += 1;
+                                isChecked[index] = false;
 
-    									$('#table').append(tableRow);
+                                tableRow = '<tr>';
+                                tableRow += '<td>'+parentItem+'</td>';
+                                tableRow += '<td><select class="form-control" id= "'+index+'"onchange="changeLabel(this);"';
 
-    								})
+                                destData.data.forEach(item => {
+                                    tableRow += '<option value="'+item.name+'">'+item.name+'</option>'        
+                                })
 
-    							}
-    							
-    						});
+                                tableRow += '</select></td>'
+                                tableRow += '<td><input type="checkbox" class="form-check-input" onclick="handleClick('+index+')" name="note"></td>'
+                                tableRow += '</tr>';
+
+                                answer[index] = {
+                                    fields: parentItem,
+                                    label: false,
+                                    isChecked: isChecked[index]
+                                }
+
+
+                                index += 1;
+
+                                $('#table').append(tableRow);
+                                   
+                            })
+
+                            changeLabel = (data) => {
+                                var fieldValue = $(data).val();
+                                var fieldId = $(data).attr("id")
+                                
+                                answer[fieldId]["label"] = fieldValue
+                            }
+
+                            handleClick = (data) => {
+                                var checkboxId = data
+                            
+                                if (answer[checkboxId]["isChecked"] === false) {
+                                    answer[checkboxId]["isChecked"] = true;
+                                } else {
+                                    answer[checkboxId]["isChecked"] = false;
+                                }
+                            }
+
+
+                            showData = () => {
+                                var showing = ''
+                                showing += '<pre>'
+                                for(var i=0; i<answer.length; i++) {
+                                    showing += '{'
+                                    showing += answer[i]["fields"]
+                                    showing += '<br>'
+                                    showing += answer[i]["label"]
+                                    showing += '<br>'
+                                    showing += answer[i]["isChecked"]
+                                    showing += '<br>'
+                                    showing += '}'
+                                    showing += '<br>'
+                                }
+                                showing += '</pre>'
+                                document.getElementById('dataArray').innerHTML = showing
+                            }
 
 	    				})
 
     				</script>
     			</tbody>
   			</table>
+
+  			<button class="btn btn-primary btn-md mt-3 mb-3" onclick="showData();">Submit</button>
+  			<h3>Submitted Data :-</h3>
+  			<div id="dataArray"></div>
+  			<br>
 		</div>
 	</div>
+
+	<script>
+		
+		
+
+	</script>
 
 </body>
 </html>
